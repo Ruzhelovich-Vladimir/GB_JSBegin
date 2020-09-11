@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task#1.2</title>
+</head>
+<body>
+<script>
+    "use strict";
+
+    /*
+    1.2 Сделайте в стиле es5, а затем в стиле es6 (по аналогии из урока),
+        а) конструктор Post, который принимает параметры author, text, date и
+           сохраняет их как свойства объекта. Объекты типа Post должны иметь
+           метод edit, который будет принимать текст и записывать его в свойство
+           text объекта.
+        б) конструктор AttachedPost, который принимает параметры author, text,
+           date. Проинициализируйте эти свойства с помощью конструктора Post,
+           чтобы не дублировать код. Также в конструкторе AttachedPost должно
+           создаваться свойство highlighted со значением false. Унаследуйте в
+           объектах типа AttachedPost методы из Post.
+           Объекты типа AttachedPost должны иметь метод makeTextHighlighted,
+           который будет назначать свойству highlighted значение true.
+    */
+
+    /*
+    Стиль ES5
+     */
+    function Post_es5(author, text, date) {
+        /*
+        Коснтруктор объекта Post
+         */
+        this.author = author;
+        this.text = text;
+        this.date = date;
+    }
+
+    Post_es5.prototype.edit = function (text) {
+        /*
+        Редактирование сообщения
+         */
+        this.text = text;
+    };
+
+    function AttachedPost_es5(author, text, date) {
+        /*
+        Коснтруктор объекта AttachedPost_es5
+         */
+        Post_es5.call(this, author, text, date); //Наследую свойства объкта Post_es5
+        this.highlighted = false; //Создаём собственное свойство
+    }
+
+    // Наследую методы объета Post_es5
+    // меняю прототип на созданный прототип на основе объекта Post_es5
+    AttachedPost_es5.prototype = Object.create(Post_es5.prototype);
+    // Восстанавливаем конструктор
+    AttachedPost_es5.prototype.constructor = AttachedPost_es5;
+
+    // Добавляю метод в объект AttachedPost_es5
+    AttachedPost_es5.prototype.makeTextHighlighted = function () {
+        /*
+        Метод makeTextHighlighted
+         */
+        this.highlighted = true;
+    };
+	//****************
+    // Демонстрация
+    //****************
+    console.log("ES5:");
+    const attached1 = new AttachedPost_es5('Владимир','Привет!','2020-09-10'); //Создаём объект
+    attached1.edit("Пока!"); //Используем наследуемый метод
+    attached1.makeTextHighlighted(); //Используем свой метод
+    //Используем своё и наследуемые свойства
+    console.log(`Автор: ${attached1.author}\nДата: ${attached1.date}\nТекст: ${attached1.text}\nВыделение: ${attached1.highlighted}`);
+
+    /*
+    Стиль ES6
+    */
+
+    class Post_es6 {
+        /* Объект Post_es6 */
+
+        constructor(author, text, date) {
+            /*
+            Коснтруктор объекта Post_es6
+             */
+            this.author = author;
+            this.text = text;
+            this.date = date;
+        }
+        edit(text) {
+            /*
+            Редактирование сообщения
+             */
+            this.text = text;
+        }
+    }
+
+    class AttachedPost_es6 extends Post_es6{
+        /*AttachedPost_es6*/
+
+        constructor(author, text, date) {
+            /*
+            Коснтруктор объекта Post
+             */
+            super(author, text, date);
+            this.highlighted = false;
+        } 
+
+        makeTextHighlighted () {
+            /*
+            Метод makeTextHighlighted
+             */
+            this.highlighted = true;
+        } 
+    }
+	//****************
+    // Демонстрация
+    //****************
+    console.log("ES6:");
+    const attached2 = new AttachedPost_es6('Владимир','Привет!','2020-09-10'); //Создаём объект
+    attached2.edit("Пока!"); //Используем наследуемый метод
+    attached2.makeTextHighlighted(); //Используем свой метод
+    //Используем своё и наследуемые свойства
+    console.log(`Автор: ${attached2.author}\nДата: ${attached2.date}\nТекст: ${attached2.text}\nВыделение: ${attached2.highlighted}`);
+
+
+</script>
+</body>
+</html>
