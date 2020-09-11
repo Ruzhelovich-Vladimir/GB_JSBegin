@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task#1.1</title>
+</head>
+<body>
+<script>
+    "use strict";
+
+    /*
+    1.1 Сделайте в стиле es5, а затем в стиле es6 (по аналогии из урока), конструктор Product,
+        который принимает параметры name и price, сохраните их как свойства объекта.
+        Также объекты типа Product должны иметь метод make25PercentDiscount,
+        который будет уменьшать цену в объекте на 25%.
+    */
+
+	/*
+	ES5
+	*/
+    function Product_es5(name, price) {
+        /*
+        Коснтруктор объекта Product
+         */
+
+        this.name = name;
+        this.price = price;
+    }
+
+    Product_es5.prototype.make25PercentDiscount = function () {
+        /*
+        Уменьшение цены в объекте на 25%
+         */
+		let discount = 25; 					//Процент скидки
+        this.price *= (100-discount)/100;	//Расчёт цены
+    };
+
+	/*
+	ES6
+	*/
+	class Product_es6 {
+
+		constructor(name, price){
+            /*
+            Коснтруктор объекта Product
+            */
+            this.name = name;
+            this.price = price;
+        }
+
+        make25PercentDiscount() {
+            /*
+            Уменьшение цены в объекте на 25%
+             */
+			let discount = 25; 					//Процент скидки
+			this.price *= (100-discount)/100;	//Расчёт цены
+        }
+    }
+    //****************
+    // Демонстрация
+    //****************
+    const product_es5 = new Product_es5("Хлеб",30.7);
+    product_es5.make25PercentDiscount();
+    const product_es6 = new Product_es6("Хлеб",30.7);
+    product_es6.make25PercentDiscount();
+
+    console.log(`es5:${product_es5.name} - ${product_es5.price}`);
+    console.log(`es6:${product_es6.name} - ${product_es6.price}`);
+
+</script>
+</body>
+</html>
